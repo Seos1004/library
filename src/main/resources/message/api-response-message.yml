@@ -1,0 +1,17 @@
+# code 형식: 998:사용자정의 오류, 997:시스템오류
+# desc 형식: 사용자정의 오류메세지
+# code 100(status code) + 00(기능번호) 000(순서) ex) 40401001 해당 버킷을 찾을 수 없습니다.
+success:
+  ok:
+    code: 20000000
+    desc: "성 공"
+    status: 200
+  created:
+    code: 20100000
+    desc: "정상 생성 되었습니다."
+    status: 201
+exception:
+  not_specified_message:
+    code: 50000000
+    desc: "지정되지 않은 오류가 발생하였습니다."
+    status: 500

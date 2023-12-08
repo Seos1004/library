@@ -1,0 +1,62 @@
+server:
+  port: 8080
+  servlet:
+    session:
+      timeout: 60000 #jwt.access.validity-time 과 동일해야함
+spring:
+  config:
+    activate:
+      on-profile: local
+  data:
+    redis:
+      host: localhost
+      port: 6379
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+      settings:
+        trace: false
+        web-allow-others: false
+  sql:
+    init:
+      data-locations: "classpath*:/h2-init.sql"
+      mode: always
+  datasource:
+    driver-class-name: org.h2.Driver
+    url: jdbc:h2:mem:library
+    hikari:
+      username: sa
+      password:
+      connection-timeout: 5000
+      validation-timeout: 1000
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-test-query: SELECT NOW()
+springdoc:
+  packages-to-scan: kr.co.library.api.controller
+  default-produces-media-type: application/json;charset=UTF-8
+  default-consumes-media-type: application/json;charset=UTF-8
+  title: library local Infra api swagger
+  version: v1.0.0
+  description: library Infra api project description
+  cache:
+    disabled: true
+  swagger-ui:
+    operations-sorter: alpha
+    tags-sorter: alpha
+    path: /api-docs
+    csrf:
+      enabled: true
+  api-docs:
+    path: /api-docs/json
+    groups:
+      enabled: true
+jwt:
+  secret_key: seoseunghwan_library
+  access:
+    validity-time: 60000
+  refresh:
+    validity-time: 604800000
+
+
