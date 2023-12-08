@@ -3,9 +3,7 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-.gradle
-.look
-.bin
+.gradle*
 
 ### STS ###
 .apt_generated
