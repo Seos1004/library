@@ -3,6 +3,8 @@ package kr.co.library.api.constant;
 public final class JWTConstant {
     public static final String BEARER_PREFIX = "Bearer ";
 
+    public static final String REQUEST_TOKEN_HEADER_KEY = "Authorization";
+
     public static final String CREATE_CLAIMS_USER_SEQ_KEY = "seq";
     public static final String CREATE_CLAIMS_USER_NAME_KEY = "name";
 

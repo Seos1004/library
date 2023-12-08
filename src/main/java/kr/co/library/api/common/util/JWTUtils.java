@@ -7,6 +7,7 @@ import kr.co.library.api.model.util.jwt.JWTTokenCreateUserModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.util.StringUtils;
 
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
@@ -69,6 +70,21 @@ public class JWTUtils {
         log.info("[JWTUtils.tokenValidation] END");
         return ValidationResult;
     }
+
+    public String tokenPrefixParser(String authorization) {
+        String result = null;
+        log.info("[JWTUtils.tokenPrefixParser] START");
+        String bearerToken = authorization;
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(JWTConstant.BEARER_PREFIX)) {
+            result = bearerToken.substring(7);
+            log.info("[JWTUtils.tokenPrefixParser] 요청받은 토큰 PREFIX 파싱 성공");
+        }else{
+            log.warn("[JWTUtils.tokenPrefixParser] 요청받은 토큰 PREFIX 파싱 실패");
+        }
+        log.info("[JWTUtils.tokenPrefixParser] END");
+        return result;
+    }
+
 
     private String createJWTToken(JWTTokenCreateUserModel user , Integer validityTime){
         log.info("[JWTUtils.createJWTToken] START");

@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RestController
 @RequestMapping("/api")
-@Tag(name = "1. Sign" , description = "로그인/로그아웃 컨트롤러")
+@Tag(name = "1. Sign" , description = "Sign 컨트롤러")
 public class SignController {
 
     @Autowired
