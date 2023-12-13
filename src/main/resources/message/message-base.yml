@@ -1,0 +1,8 @@
+#success or exception
+  #해당메시지의key:
+    #code: status(3자리) + messageIndex(파일에있는 숫자 (3자리)) + detailIndex (4자리)
+    #desc: "상세 내용"
+    #status: http status code 사용
+success:
+exception:
+

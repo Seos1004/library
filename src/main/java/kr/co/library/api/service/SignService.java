@@ -4,6 +4,7 @@ import kr.co.library.api.common.dao.CommonDAO;
 import kr.co.library.api.common.response.exception.custom.ServiceFail;
 import kr.co.library.api.common.util.JWTUtils;
 import kr.co.library.api.common.util.RedisUtils;
+import kr.co.library.api.component.user.UserComponent;
 import kr.co.library.api.model.sign.request.SignInRequestModel;
 import kr.co.library.api.model.sign.request.SignOutRequestModel;
 import kr.co.library.api.model.sign.request.SignUpRequestModel;
@@ -32,14 +33,15 @@ public class SignService {
     private RedisUtils redisUtils;
 
     @Autowired
+    private UserComponent userComponent;
+
+    @Autowired
     private PasswordEncoder passwordEncoder;
     public SignInResponseModel signIn(SignInRequestModel signInRequestModel) {
-        /*20231208 리펙토링 전*/
         log.info("[SampleDetailService.signIn] START");
         boolean userExist = false;
         try {
-            //사용자 조회
-            userExist = commonDao.selectCount("sign.userExist" , signInRequestModel.getUserId()) > 0 ? true : false;
+            userExist = userComponent.userExist(signInRequestModel.getUserId());
         }catch (Exception e){
             log.error("사용자 존재 확인 오류");
             throw new ServiceFail("not_specified_message" , e);
@@ -99,8 +101,7 @@ public class SignService {
         String responseKey = "created";
         boolean userExist = false;
         try {
-            //사용자 조회
-            userExist = commonDao.selectCount("sign.userExist" , signUpRequestModel.getUserId()) > 0 ? true : false;
+            userExist = userComponent.userExist(signUpRequestModel.getUserId());
         }catch (Exception e){
             log.error("사용자 존재 확인 오류");
             throw new ServiceFail("" , e);
@@ -112,7 +113,8 @@ public class SignService {
         try {
             signUpRequestModel.setPassword(passwordEncoder.encode(signUpRequestModel.getPassword()));
             log.info("signUpRequestModel.getPassword() ? : {}" , signUpRequestModel.getPassword());
-            commonDao.insert("sign.createUser" , signUpRequestModel);
+            //TODO 이거  UserCOmponent로 뺴고 model객체 만들어서 해야함
+            commonDao.insert("userComponent.createUser" , signUpRequestModel);
         }catch (Exception e){
             log.error("사용자 생성중 오류");
             throw new ServiceFail("" , e);
