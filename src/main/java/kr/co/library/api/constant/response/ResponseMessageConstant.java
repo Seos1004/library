@@ -1,4 +1,4 @@
-package kr.co.library.api.constant;
+package kr.co.library.api.constant.response;
 
 public final class ResponseMessageConstant {
     public static final String MESSAGE_TYPE_SUCCESS = "success";
@@ -7,9 +7,6 @@ public final class ResponseMessageConstant {
     public static final String MESSAGE_KEY_CODE = "code";
     public static final String MESSAGE_KEY_DESC = "desc";
     public static final String MESSAGE_KEY_STATUS = "status";
-
-    public static final String MESSAGE_SUCCESS_DEFAULT_KEY = "ok";
-    public static final String MESSAGE_EXCEPTION_DEFAULT_KEY = "not_specified_message";
 }
 
 

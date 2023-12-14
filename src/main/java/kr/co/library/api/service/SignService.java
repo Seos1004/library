@@ -5,6 +5,7 @@ import kr.co.library.api.common.response.exception.custom.ServiceFail;
 import kr.co.library.api.common.util.JWTUtils;
 import kr.co.library.api.common.util.RedisUtils;
 import kr.co.library.api.component.user.UserComponent;
+import kr.co.library.api.constant.JWTConstant;
 import kr.co.library.api.model.sign.request.SignInRequestModel;
 import kr.co.library.api.model.sign.request.SignOutRequestModel;
 import kr.co.library.api.model.sign.request.SignUpRequestModel;
@@ -13,6 +14,7 @@ import kr.co.library.api.model.util.jwt.JWTTokenCreateUserModel;
 import kr.co.library.api.model.util.redis.CreateKeyModel;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +37,9 @@ public class SignService {
     @Autowired
     private UserComponent userComponent;
 
+    @Value("${jwt.refresh.validity-time}")
+    private Integer REFRESH_TOKEN_VALIDITY_TIME;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
     public SignInResponseModel signIn(SignInRequestModel signInRequestModel) {
@@ -55,7 +60,7 @@ public class SignService {
         String dbPassword = "";
         boolean passwordCheck = false;
         try {
-            dbPassword = commonDao.select("sign.getPassword" , signInRequestModel.getUserId());
+            dbPassword = commonDao.select("userComponent.getPassword" , signInRequestModel.getUserId());
         }catch (Exception e){
             log.error("사용자 패스워드 조회 오류");
             throw new ServiceFail("" , e);
@@ -63,7 +68,7 @@ public class SignService {
         try {
             passwordCheck = passwordEncoder.matches(inputPassword , dbPassword);
         }catch (Exception e){
-            log.error("패스워드 검사중 오류 {}" , e);
+            log.error("패스워드 검사중 오류 {}");
             throw new ServiceFail("" , e);
         }
         log.info("passwordCheck ? : {}" , passwordCheck);
@@ -77,16 +82,16 @@ public class SignService {
                 List<CreateKeyModel> keys = new ArrayList<CreateKeyModel>();
 
                 CreateKeyModel key = new CreateKeyModel();
-                key.setKey("accessToken");
+                key.setKey(JWTConstant.ACCESS_TOKEN_KEY);
                 key.setValue(accessToken);
                 keys.add(key);
 
                 key = new CreateKeyModel();
-                key.setKey("refreshToken");
+                key.setKey(JWTConstant.REFRESH_TOKEN_KEY);
                 key.setValue(refreshToken);
                 keys.add(key);
                 //아래 리프레시 토큰 만료시간으로 지정해야함
-                redisUtils.createHashTypeKey(signInRequestModel.getUserId() , keys ,120000);
+                redisUtils.createHashTypeKey(signInRequestModel.getUserId() , keys ,REFRESH_TOKEN_VALIDITY_TIME);
                 signInResponseModel.setToken(accessToken);
             }catch (Exception e){
                 log.error("토큰 생성중 오류");

@@ -118,7 +118,7 @@ public class ExceptionResponseHandler {
                 request.getRequestURI()
         );
         if(null != e.getException()){
-            errorLogging(e);
+            errorLogging(e.getException());
         }
         return result;
     }

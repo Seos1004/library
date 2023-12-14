@@ -1,7 +1,8 @@
 package kr.co.library.api.common.response;
 
 import jakarta.annotation.PostConstruct;
-import kr.co.library.api.constant.ResponseMessageConstant;
+import kr.co.library.api.constant.response.ResponseMessageConstant;
+import kr.co.library.api.constant.response.YmlKey000CommonConstant;
 import kr.co.library.api.model.properties.message.MessageProperty;
 import kr.co.library.api.model.response.ResponseMessageModel;
 import lombok.extern.slf4j.Slf4j;
@@ -50,7 +51,8 @@ public class ResponseMessage {
             result.setDesc(exceptionInfo.get(ResponseMessageConstant.MESSAGE_KEY_DESC).toString());
             result.setStatus(exceptionInfo.get(ResponseMessageConstant.MESSAGE_KEY_STATUS).toString());
         }else if(null == exceptionInfo){
-            exceptionInfo = (Map<String, Object>) exceptionInfos.get(ResponseMessageConstant.MESSAGE_EXCEPTION_DEFAULT_KEY);
+            exceptionInfo = (Map<String, Object>) exceptionInfos.get(YmlKey000CommonConstant.NOT_SPECIFIED_MESSAGE
+            );
             result.setCode(exceptionInfo.get(ResponseMessageConstant.MESSAGE_KEY_CODE).toString());
             result.setDesc(exceptionInfo.get(ResponseMessageConstant.MESSAGE_KEY_DESC).toString());
             result.setStatus(exceptionInfo.get(ResponseMessageConstant.MESSAGE_KEY_STATUS).toString());
@@ -68,7 +70,7 @@ public class ResponseMessage {
            result.setDesc(successInfo.get(ResponseMessageConstant.MESSAGE_KEY_DESC).toString());
            result.setStatus(successInfo.get(ResponseMessageConstant.MESSAGE_KEY_STATUS).toString());
        }else if(null == successInfo){
-           successInfo = (Map<String, Object>) successInfos.get(ResponseMessageConstant.MESSAGE_SUCCESS_DEFAULT_KEY);
+           successInfo = (Map<String, Object>) successInfos.get(YmlKey000CommonConstant.OK);
            result.setCode(successInfo.get(ResponseMessageConstant.MESSAGE_KEY_CODE).toString());
            result.setDesc(successInfo.get(ResponseMessageConstant.MESSAGE_KEY_DESC).toString());
            result.setStatus(successInfo.get(ResponseMessageConstant.MESSAGE_KEY_STATUS).toString());

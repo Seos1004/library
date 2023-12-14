@@ -1,14 +1,13 @@
 package kr.co.library.api.common.util;
 
+import kr.co.library.api.model.util.jwt.JWTTokenModel;
 import kr.co.library.api.model.util.redis.CreateKeyModel;
 import lombok.extern.slf4j.Slf4j;
-import org.joda.time.Instant;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.HashOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -18,6 +17,28 @@ public class RedisUtils {
 
     @Autowired
     private RedisTemplate redisTemplate;
+
+
+    public JWTTokenModel getHashType(String key){
+        log.info("[RedisUtils.getHashType] START {}" , key);
+        ModelMapper modelMapper = new ModelMapper();
+        JWTTokenModel result = null;
+        Map<String , Object> entries = redisTemplate.opsForHash().entries(key);
+        if(entries.isEmpty()){
+            log.info("[RedisUtils.getHashType] is empty");
+        }else{
+            result = modelMapper.map(redisTemplate.opsForHash().entries(key), JWTTokenModel.class);
+        }
+        log.info("[RedisUtils.getHashType] END {}.{}" , key , result);
+        return result;
+    }
+    public Object getHashTypeDetail(String key , String hashKey){
+        log.info("[RedisUtils.getHashTypeDetail] START {}.{}" , key , hashKey);
+        Object result = redisTemplate.opsForHash().get(key , hashKey);
+        log.info("[RedisUtils.getHashTypeDetail] result ? {}" , result);
+        log.info("[RedisUtils.getHashTypeDetail] END {}.{}" , key , hashKey);
+        return result;
+    }
 
     public String createHashTypeKey(String key , List<CreateKeyModel> createKeyModels , int expireTime){
         log.info("[RedisUtils.addRedis] START {}.{}" , key , expireTime);

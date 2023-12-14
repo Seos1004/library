@@ -20,15 +20,17 @@ class JWTUtilsTest {
         param.setUserName("서승환zz");
         String token = jwtUtils.createAccessToken(param);
         System.out.println("token ? : " + token);
-        getClaimsInKey(token);
     }
 
     @Test
-    void getClaimsInKey(String token) {
+    void getClaimsInKey() {
+        String token = "eyJyZWdEYXRlIjoxNzAyNTQxMTcwNzYzLCJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJuYW1lIjpudWxsLCJleHAiOjE3MDI1NDE3NzAsInNlcSI6bnVsbH0.08xTVbVDHGoIr9OCaBklm10j_7lZA1hnXFNNQT-sKGw";
         String result = jwtUtils.getClaimsInKey(token , JWTConstant.GET_CLAIMS_IN_SEQ);
         System.out.println("seq ? : " + result);
         result = jwtUtils.getClaimsInKey(token , JWTConstant.GET_CLAIMS_IN_NAME);
         System.out.println("name ? : " + result);
+        result = jwtUtils.getClaimsInKey(token , JWTConstant.GET_CLAIMS_IN_ID);
+        System.out.println("id : " + result);
     }
 
     @Test

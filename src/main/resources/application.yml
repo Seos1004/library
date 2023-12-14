@@ -9,3 +9,16 @@ message:
   file_path_list:
     - "/message/000-common-response-message.yml"
     - "/message/001-sign-response-message.yml"
+
+interceptor:
+  contains_white_list:
+    - "swagger-ui"
+    - "api-docs"
+    - "h2-console"
+  starts_with_white_list:
+    - "/api/sign-in"
+    - "/api/sign-up"
+    - "/api/sample"
+
+
+

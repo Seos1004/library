@@ -55,7 +55,7 @@ springdoc:
 jwt:
   secret_key: seoseunghwan_library
   access:
-    validity-time: 60000
+    validity-time: 600000
   refresh:
     validity-time: 604800000
 

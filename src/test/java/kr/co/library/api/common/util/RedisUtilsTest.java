@@ -31,8 +31,19 @@ class RedisUtilsTest {
         param.setKey("key4");
         param.setValue("tnwjd");
         createKeys.add(param);
-        redisUtils.createHashTypeKey("sshTest" , createKeys , 120000);
+        redisUtils.createHashTypeKey("sshTest" , createKeys , 1200000);
     }
+    @Test
+    void getHashType() {
+        redisUtils.getHashType("sshTest");
+    }
+    @Test
+    void getHashTypeDetail() {
+        redisUtils.getHashTypeDetail("sshTest" , "key1");
+        redisUtils.getHashTypeDetail("sshTest" , "key22");
+        redisUtils.getHashTypeDetail("sshTest" , "key3");
+    }
+
 
     @Test
     void removeHashTypeKey() {

@@ -42,6 +42,7 @@ public class JWTUtils {
         switch (key){
             case JWTConstant.GET_CLAIMS_IN_NAME:
             case JWTConstant.GET_CLAIMS_IN_SEQ:
+            case JWTConstant.GET_CLAIMS_IN_ID:
                 result = parseClaims(token).get(key).toString();
                 break;
         }
@@ -51,22 +52,22 @@ public class JWTUtils {
     public String tokenValidation(String token) {
         log.info("[JWTUtils.tokenValidation] START");
         String ValidationResult = "";
-        String userName = "";
+        String userId = "";
         try {
-            userName = getClaimsInKey(token, JWTConstant.GET_CLAIMS_IN_NAME);;
+            userId = getClaimsInKey(token, JWTConstant.GET_CLAIMS_IN_ID);
             Jwts.parser().setSigningKey(createSigningKey(JWT_ACCESS_TOKEN_SECRET)).parseClaimsJws(token);
             ValidationResult = JWTConstant.TOKEN_VALIDATION_SUCCESS;
         } catch (ExpiredJwtException e) {
-            log.info("[JWTUtils.tokenValidation] {} 만료된 토큰입니다." , userName);
+            log.info("[JWTUtils.tokenValidation] {} 만료된 토큰입니다." , userId);
             ValidationResult =  JWTConstant.TOKEN_VALIDATION_EXPIRATION;
         } catch (JwtException exception) {
-            log.info("[JWTUtils.tokenValidation] {} 위/변조 토큰입니다." , userName);
+            log.info("[JWTUtils.tokenValidation] {} 위/변조 토큰입니다." , userId);
             ValidationResult =  JWTConstant.TOKEN_VALIDATION_FAKE;
         }  catch (Exception e) {
-            log.info("[JWTUtils.tokenValidation] {} 잘못된 토큰입니다." , userName);
+            log.info("[JWTUtils.tokenValidation] {} 잘못된 토큰입니다." , userId);
             ValidationResult =  JWTConstant.TOKEN_VALIDATION_FAIL;
         }
-        log.info("[JWTUtils.tokenValidation] userName : {} Result : {}" , userName , ValidationResult);
+        log.info("[JWTUtils.tokenValidation] userName : {} Result : {}" , userId , ValidationResult);
         log.info("[JWTUtils.tokenValidation] END");
         return ValidationResult;
     }
@@ -112,8 +113,9 @@ public class JWTUtils {
     private Map<String, Object> createClaims(JWTTokenCreateUserModel user) {
         log.info("[JWTUtils.createClaims] START {}" , user.getUserName());
         Map<String, Object> claims = new HashMap<>();
-        claims.put(JWTConstant.CREATE_CLAIMS_USER_SEQ_KEY, user.getUserSeq());
-        claims.put(JWTConstant.CREATE_CLAIMS_USER_NAME_KEY, user.getUserName());
+        //claims.put(JWTConstant.CREATE_CLAIMS_USER_SEQ_KEY, user.getUserSeq());
+        //claims.put(JWTConstant.CREATE_CLAIMS_USER_NAME_KEY, user.getUserName());
+        claims.put(JWTConstant.CREATE_CLAIMS_ID_NAME_KEY, user.getUserId());
         log.info("[JWTUtils.createClaims] END" , user.getUserName());
         return claims;
     }
@@ -138,7 +140,7 @@ public class JWTUtils {
             // 만료된 토큰이 더라도 일단 파싱을 함
             result = e.getClaims();
         }catch (Exception e){
-            log.error("[JWTUtils.parseClaims] 토큰 파서 오류 {}" , e);
+            log.error("[JWTUtils.parseClaims] 토큰 파서 오류 {}");
             return null;
         }
         log.info("[JWTUtils.parseClaims] END");
