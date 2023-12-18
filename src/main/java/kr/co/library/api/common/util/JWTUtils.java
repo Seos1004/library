@@ -67,7 +67,7 @@ public class JWTUtils {
             log.info("[JWTUtils.tokenValidation] {} 잘못된 토큰입니다." , userId);
             ValidationResult =  JWTConstant.TOKEN_VALIDATION_FAIL;
         }
-        log.info("[JWTUtils.tokenValidation] userName : {} Result : {}" , userId , ValidationResult);
+        log.info("[JWTUtils.tokenValidation] userId : {} Result : {}" , userId , ValidationResult);
         log.info("[JWTUtils.tokenValidation] END");
         return ValidationResult;
     }

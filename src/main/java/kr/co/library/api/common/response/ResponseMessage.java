@@ -31,10 +31,15 @@ public class ResponseMessage {
             Map<String,Object> successSumMap = new HashMap<>();
             Map<String,Object> exceptionSumMap = new HashMap<>();
             for(String filePath : messageProperty.getFilePathList()){
+                log.info("[ResponseMessage.init] file ? : {}" , filePath);
                 yaml = new YamlMapFactoryBean();
                 yaml.setResources(new ClassPathResource(filePath));
-                successSumMap.putAll((Map<String, Object>) yaml.getObject().get(ResponseMessageConstant.MESSAGE_TYPE_SUCCESS));
-                exceptionSumMap.putAll((Map<String, Object>) yaml.getObject().get(ResponseMessageConstant.MESSAGE_TYPE_EXCEPTION));
+                if(null != (Map<String, Object>) yaml.getObject().get(ResponseMessageConstant.MESSAGE_TYPE_SUCCESS)){
+                    successSumMap.putAll((Map<String, Object>) yaml.getObject().get(ResponseMessageConstant.MESSAGE_TYPE_SUCCESS));
+                }
+                if(null != (Map<String, Object>) yaml.getObject().get(ResponseMessageConstant.MESSAGE_TYPE_EXCEPTION)){
+                    exceptionSumMap.putAll((Map<String, Object>) yaml.getObject().get(ResponseMessageConstant.MESSAGE_TYPE_EXCEPTION));
+                }
             }
             initMessageInfo.put(ResponseMessageConstant.MESSAGE_TYPE_SUCCESS , successSumMap);
             initMessageInfo.put(ResponseMessageConstant.MESSAGE_TYPE_EXCEPTION , exceptionSumMap);

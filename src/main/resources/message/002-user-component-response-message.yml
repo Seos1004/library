@@ -1,0 +1,15 @@
+success:
+
+exception:
+  user_exist_fail:
+    code: 5000020001
+    desc: "사용자 조회중 오류가 발생하였습니다."
+    status: 500
+  get_user_password_fail:
+    code: 5000020002
+    desc: "사용자 비밀번호 조회중 오류가 발생하였습니다."
+    status: 500
+  create_user_fail:
+    code: 5000020003
+    desc: "사용자 테이블 INSERT 중 오류가 발생하였습니다."
+    status: 500

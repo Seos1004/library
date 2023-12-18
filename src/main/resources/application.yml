@@ -9,6 +9,7 @@ message:
   file_path_list:
     - "/message/000-common-response-message.yml"
     - "/message/001-sign-response-message.yml"
+    - "/message/002-user-component-response-message.yml"
 
 interceptor:
   contains_white_list:
