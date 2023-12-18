@@ -25,21 +25,25 @@ exception:
     code: 5000010005
     desc: "로그인 토큰 생성중 오류가 발생하였습니다."
     status: 500
+  sing_in_password_inconsistency:
+    code: 4000010006
+    desc: "비밀번호가 일치하지 않습니다."
+    status: 400
 
   sing_up_user_exist_fail:
-    code: 5000010006
+    code: 5000010007
     desc: "사용자 조회중 오류가 발생하였습니다."
     status: 500
   sing_up_user_exist:
-    code: 4000010007
+    code: 4000010008
     desc: "이미 존재하는 사용자입니다."
     status: 400
   sing_up_create_user_fail:
-    code: 5000010008
+    code: 5000010009
     desc: "사용자 생성중 오류가 발생하였습니다."
     status: 500
 
   sing_out_remove_token_fail:
-    code: 5000010009
+    code: 5000010010
     desc: "사용자 토큰 삭제중 오류가 발생하였습니다."
     status: 500

@@ -100,6 +100,9 @@ public class SignService {
                 throw new ServiceFail(YmlKey001SignConstant.SING_IN_TOKEN_CREATE_FAIL , e);
 
             }
+        }else{
+            log.info("[SignService.signIn] 비밀번호가 일치하지 않습니다.");
+            throw new ServiceFail(YmlKey001SignConstant.SING_IN_PASSWORD_INCONSISTENCY);
         }
         log.info("[SignService.signIn] END {}" , signInRequestModel.getUserId());
         return signInResponseModel;

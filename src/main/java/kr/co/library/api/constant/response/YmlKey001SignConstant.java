@@ -12,6 +12,7 @@ public final class YmlKey001SignConstant {
     public static final String SING_IN_GET_PASSWORD_FAIL = "sing_in_get_password_fail";
     public static final String SING_IN_PASSWORD_CHECK_FAIL = "sing_in_password_check_fail";
     public static final String SING_IN_TOKEN_CREATE_FAIL = "sing_in_token_create_fail";
+    public static final String SING_IN_PASSWORD_INCONSISTENCY = "sing_in_password_inconsistency";
 
     //가입(사용자 생성)
     public static final String SING_UP_USER_EXIST_FAIL = "sing_up_user_exist_fail";
