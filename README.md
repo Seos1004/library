@@ -11,3 +11,8 @@ swagger
 redis
 Active profiles local설정 必
 
+예정
+    1. kafka
+    2. 실시간 스트리밍
+    3. ELK
+
