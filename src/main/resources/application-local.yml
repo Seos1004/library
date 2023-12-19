@@ -7,6 +7,10 @@ spring:
   config:
     activate:
       on-profile: local
+  kafka:
+    producer:
+      host: localhost
+      port: 9092
   data:
     redis:
       host: localhost
