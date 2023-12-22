@@ -62,15 +62,15 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
                 log.info("[InterceptorConfiguration.InterceptorHandler.preHandle] pass url {}" , request.getRequestURL());
                 return result;
             }else{
+                if(null == token || token.isBlank()){
+                    log.info("[InterceptorConfiguration.InterceptorHandler.preHandle] 토큰이 헤더에 존재하지 않음");
+                    throw new ServiceFail(YmlKey000CommonConstant.INTERCEPTOR_HEADER_TOKEN_NOT_EXIST);
+                }
                 try {
                     token = jwtUtils.tokenPrefixParser(request.getHeader(JWTConstant.REQUEST_TOKEN_HEADER_KEY));
                 }catch (Exception e){
                     log.error("[InterceptorConfiguration.InterceptorHandler.preHandle] HEADER 파싱 실패");
                     throw new ServiceFail(YmlKey000CommonConstant.INTERCEPTOR_HEADER_TOKEN_PARSING_FAIL , e);
-                }
-                if(null == token || token.isBlank()){
-                    log.info("[InterceptorConfiguration.InterceptorHandler.preHandle] 토큰이 헤더에 존재하지 않음");
-                    throw new ServiceFail(YmlKey000CommonConstant.INTERCEPTOR_HEADER_TOKEN_NOT_EXIST);
                 }
                 tokenParsingResult = jwtUtils.tokenValidation(token);
                 log.info("[InterceptorConfiguration.InterceptorHandler.preHandle] tokenParsingResult ? : {}" , tokenParsingResult);

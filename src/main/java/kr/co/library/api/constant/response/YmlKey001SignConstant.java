@@ -4,6 +4,8 @@ public final class YmlKey001SignConstant {
 
     //SUCCESS
     public static final String SIGN_UP_SUCCESS = "sign_up_success";
+    public static final String SIGN_IN_SUCCESS = "sign_in_success";
+    public static final String SIGN_OUT_SUCCESS = "sign_out_success";
 
     //EXCEPTION
     //로그인

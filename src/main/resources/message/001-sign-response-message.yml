@@ -3,6 +3,14 @@ success:
     code: 2000010001
     desc: "회원 생성에 성공하였습니다."
     status: 201
+  sign_in_success:
+    code: 2000010002
+    desc: "로그인 성공하였습니다."
+    status: 200
+  sign_out_success:
+    code: 2000010003
+    desc: "로그아웃 성공하였습니다."
+    status: 200
 
 exception:
   sing_in_user_exist_fail:
