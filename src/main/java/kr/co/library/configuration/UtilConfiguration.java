@@ -3,6 +3,7 @@ package kr.co.library.configuration;
 import kr.co.library.api.common.util.DateUtils;
 import kr.co.library.api.common.util.JWTUtils;
 import kr.co.library.api.common.util.RedisUtils;
+import kr.co.library.api.common.util.rest.NaverRest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -24,6 +25,10 @@ public class UtilConfiguration {
     @Bean
     public RedisUtils redisUtils() {
         return new RedisUtils();
+    }
+    @Bean
+    public NaverRest naverRest() {
+        return new NaverRest();
     }
 
 }

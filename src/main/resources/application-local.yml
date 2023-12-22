@@ -8,9 +8,8 @@ spring:
     activate:
       on-profile: local
   kafka:
-    producer:
-      host: localhost
-      port: 9092
+    host: localhost
+    port: 9092
   data:
     redis:
       host: localhost
@@ -62,5 +61,8 @@ jwt:
     validity-time: 600000
   refresh:
     validity-time: 604800000
-
+naver:
+  papago:
+    client-id: wBnXOlDxPUAXVXImARmx
+    client-secret: H8hkDwzPus
 

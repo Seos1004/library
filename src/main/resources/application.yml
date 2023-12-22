@@ -20,7 +20,7 @@ interceptor:
     - "/api/sign-in"
     - "/api/sign-up"
     - "/api/sample"
-    - "/api/kafka"
+    - "/api/translation"
 
 
 
