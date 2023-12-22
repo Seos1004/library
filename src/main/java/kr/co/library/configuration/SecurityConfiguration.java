@@ -19,10 +19,23 @@ public class SecurityConfiguration implements WebMvcConfigurer {
     }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.cors().disable()
-                .csrf().disable()
-                .formLogin().disable()
-                .headers().frameOptions().disable();
+        http
+                .cors(
+                        cors -> cors.disable()
+                )
+                .csrf(
+                        csrf -> csrf.disable()
+                )
+                .formLogin(
+                        formLogin -> formLogin.disable()
+                )
+                .headers(
+                        headers -> {
+                            headers.frameOptions(
+                                    frameOptions -> frameOptions.disable()
+                            );
+                        }
+                );
         return http.build();
     }
 }
