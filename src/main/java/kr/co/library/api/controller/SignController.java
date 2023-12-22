@@ -39,13 +39,13 @@ public class SignController {
     public ApiResponseModel<SignInResponseModel> signIn(@Valid @RequestBody SignInRequestModel signInRequestModel){
         SignInResponseModel signInResponseModel = new SignInResponseModel();
         signInResponseModel = signService.signIn(signInRequestModel);
-        return apiResponseHandler.apiResponse("ok" , signInResponseModel);
+        return apiResponseHandler.apiResponse(signInResponseModel.getYmlKey() , signInResponseModel);
     }
 
     @PostMapping("/sign-out")
     public ApiResponseModel<Void> signOut(@Valid @RequestBody SignOutRequestModel signOutRequestModel){
-        signService.signOut(signOutRequestModel);
-        return apiResponseHandler.apiResponse("ok");
+        String responseKey = signService.signOut(signOutRequestModel);
+        return apiResponseHandler.apiResponse(responseKey);
     }
 
 }

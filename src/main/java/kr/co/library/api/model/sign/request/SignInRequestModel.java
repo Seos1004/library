@@ -1,5 +1,6 @@
 package kr.co.library.api.model.sign.request;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 

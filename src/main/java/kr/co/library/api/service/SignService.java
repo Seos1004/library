@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -57,7 +58,9 @@ public class SignService {
             log.info("[SignService.signIn] 사용자 미존재");
             throw new ServiceFail(YmlKey001SignConstant.SING_IN_USER_NOT_EXIST);
         }
+
         SignInResponseModel signInResponseModel = new SignInResponseModel();
+        signInResponseModel.setYmlKey(YmlKey001SignConstant.SIGN_IN_SUCCESS);
         String inputPassword = signInRequestModel.getPassword();
         String dbPassword = "";
         boolean passwordCheck = false;
@@ -94,7 +97,8 @@ public class SignService {
                 keys.add(key);
 
                 redisUtils.createHashTypeKey(signInRequestModel.getUserId() , keys ,REFRESH_TOKEN_VALIDITY_TIME);
-                signInResponseModel.setToken(accessToken);
+                signInResponseModel.setAccessToken(accessToken);
+                signInResponseModel.setRefreshToken(refreshToken);
             }catch (Exception e){
                 log.error("[SignService.signIn] 토큰 생성중 오류");
                 throw new ServiceFail(YmlKey001SignConstant.SING_IN_TOKEN_CREATE_FAIL , e);
@@ -108,6 +112,7 @@ public class SignService {
         return signInResponseModel;
     }
 
+    @Transactional
     public String signUp(SignUpRequestModel signUpRequestModel) {
         log.info("[SignService.signUp] START {}" , signUpRequestModel.getUserId());
         String responseKey = YmlKey001SignConstant.SIGN_UP_SUCCESS;
@@ -136,8 +141,9 @@ public class SignService {
         return responseKey;
     }
 
-    public void signOut(SignOutRequestModel signOutRequestModel) {
+    public String signOut(SignOutRequestModel signOutRequestModel) {
         log.info("[SignService.signOut] START");
+        String responseKey = YmlKey001SignConstant.SIGN_OUT_SUCCESS;
         try {
             redisUtils.removeHashTypeKey(signOutRequestModel.getUserId());
         }catch (Exception e){
@@ -145,5 +151,6 @@ public class SignService {
             throw new ServiceFail(YmlKey001SignConstant.SING_OUT_REMOVE_TOKEN_FAIL , e);
         }
         log.info("[SignService.signOut] END");
+        return responseKey;
     }
 }
