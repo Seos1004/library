@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpHeaders;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.kafka.support.Acknowledgment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -22,18 +23,30 @@ public class TranslationConsumer {
     private RestUtils naverRest;
 
     @KafkaListener(topics = "translation", groupId = "japanese")
-    public void translationToJapanese(ConsumerRecord data) {
+    public void translationToJapanese(ConsumerRecord data , Acknowledgment acknowledgment) {
         log.info("[TranslationService.translationToJapanese] START");
-        TextTranslationResponseModel response = sendPapago("ja" , data.value().toString());
-        log.info("[TranslationService.translationToJapanese] result ? : {}" , response.getMessage().getResult().getTranslatedText());
+        try {
+            TextTranslationResponseModel response = sendPapago("ja" , data.value().toString());
+            log.info("[TranslationService.translationToJapanese] result ? : {}" , response.getMessage().getResult().getTranslatedText());
+            acknowledgment.acknowledge();
+        }catch (Exception e){
+            log.error("[TranslationService.translationToJapanese] FAIL {}" , e);
+
+        }
         log.info("[TranslationService.translationToJapanese] END");
     }
 
     @KafkaListener(topics = "translation", groupId = "english")
-    public void translationToEnglish(ConsumerRecord data) {
+    public void translationToEnglish(ConsumerRecord data , Acknowledgment acknowledgment) {
         log.info("[TranslationService.translationToEnglish] START");
-        TextTranslationResponseModel response = sendPapago("en" , data.value().toString());
-        log.info("[TranslationService.translationToEnglish] result ? : {}" , response.getMessage().getResult().getTranslatedText());
+        try{
+            TextTranslationResponseModel response = sendPapago("en" , data.value().toString());
+            log.info("[TranslationService.translationToEnglish] result ? : {}" , response.getMessage().getResult().getTranslatedText());
+            acknowledgment.acknowledge();
+        }catch (Exception e){
+            log.error("[TranslationService.translationToEnglish] FAIL {}" , e);
+        }
+
         log.info("[TranslationService.translationToEnglish] END");
     }
 
